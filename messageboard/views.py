@@ -1,11 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Post
 
 # Create your views here.
 
 
 def overview(request):
-    return HttpResponse("Here be messages.")
+    context = {
+        "posts": Post.objects.all().order_by("-sent")
+    }
+    return HttpResponse(context["posts"])
 
 
 def submit(request):
