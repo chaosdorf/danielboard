@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from .models import Post
 
 # Create your views here.
@@ -9,8 +8,12 @@ def overview(request):
     context = {
         "posts": Post.objects.all().order_by("-sent")
     }
-    return HttpResponse(context["posts"])
+    return render(request, "messageboard/overview.html.j2", context)
 
 
 def submit(request):
-    return HttpResponse("This creates a new message.")
+    title = request.POST["title"]
+    content = request.POST["content"]
+    post = Post(title=title, content=content)
+    post.save()
+    return redirect("overview")

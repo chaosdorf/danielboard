@@ -1,0 +1,39 @@
+{% extends "base.html.j2" %}
+
+{% block content %}
+<h2>Add a new post:</h2>
+<form action="{% url 'submit' %}" method="POST">
+    <div class="card">
+        <div class="card-header">
+            <span class="float-left"><em>Daniel</em></span>
+            <span class="float-right">now</span>
+        </div>
+        <div class="card-body">
+            <div class="card-title">
+                <input type="text" maxlength="500" name="title" class="form-control"/>
+            </div>
+            <p class="card-text">
+                <textarea name="content" class="form-control"></textarea>
+            </p>
+        </div>
+        <div class="card-footer">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary float-right">Post</button>
+        </div>
+    </div>
+</form>
+
+<h2>Existing posts:</h2>
+{% for post in posts %}
+<div class="card">
+    <div class="card-header">
+        <span class="float-left"><em>Daniel</em></span>
+        <span class="float-right">{{ post.sent }}</span>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{ post.title }}</h5>
+        <p class="card-text">{{ post.content }}</p>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
